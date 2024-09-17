@@ -1,9 +1,10 @@
-# Multi Stage Docker with Poetry
+# Multi Stage Python Docker with Poetry and Tests
 
 ![Python Version](https://img.shields.io/badge/python-3.12-blue)
-![FastAPI](https://img.shields.io/badge/FastAPI-0.114.0-green)
 ![Docker](https://img.shields.io/badge/Docker-Multi--stage-informational)
-![Poetry](https://img.shields.io/badge/Poetry-1.8.3-orange)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.114.0-green)
+![Poetry](https://img.shields.io/badge/Poetry-1.8.3-green)
+![Pytest](https://img.shields.io/badge/Pytest-8.3.2-green)
 
 ## Getting Started
 
@@ -78,23 +79,29 @@ curl -X POST "http://localhost:8000/api/add/" -H "Content-Type: application/json
 
 ## Testing
 
-Tests can be added to the tests directory and run using pytest. Make sure to include test dependencies in the pyproject.toml file.
+Tests can be executed using pytest. Make sure you installed all test dependencies in the pyproject.toml file.
 
 ```shell
 pytest
+```
+
+Tests also can be executed from docker, using test stage.
+
+```shell
+docker build --target test-stage --build-arg TEST_ENV=true -t myapp:test .
 ```
 
 ### Fixtures
 
 #### When use case for fixtures are
 
-Clients: Database clients, AWS or other cloud clients, API clients which require setup/teardown
-Test Data: Test data in JSON or another format can be easily imported and shared across tests
-Functions: Some commonly used functions can be used as fixtures
+- Clients: Database clients, AWS or other cloud clients, API clients which require setup/teardown
+- Test Data: Test data in JSON or another format can be easily imported and shared across tests
+- Functions: Some commonly used functions can be used as fixtures
 
 #### Available fixture scopes in Pytest
 
-function: The fixture is created for each test function that uses it and is destroyed at the end of the test function. This is the default scope for fixtures.
-class: The fixture is created once per test class that uses it and is destroyed at the end of the test class.
-module: The fixture is created once per module that uses it and is destroyed at the end of the test session.
-session: The fixture is created once per test session and is destroyed at the end of the test session.
+- function: The fixture is created for each test function that uses it and is destroyed at the end of the test function. This is the default scope for fixtures.
+- class: The fixture is created once per test class that uses it and is destroyed at the end of the test class.
+- module: The fixture is created once per module that uses it and is destroyed at the end of the test session.
+- session: The fixture is created once per test session and is destroyed at the end of the test session.
