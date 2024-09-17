@@ -1,0 +1,87 @@
+[tool.poetry]
+name = "pytest-explorer"
+version = "0.1.0"
+description = ""
+authors = ["Marcel Bittar <marcel.bittar@contavoltz.com>"]
+
+[virtualenvs]
+create = true
+in-project = true
+
+
+[tool.poetry.dependencies]
+python = "^3.12"
+numpy-financial = "^1.0.0"
+fastapi = "^0.114.0"
+httpx = "^0.27.2"
+uvicorn = "^0.30.6"
+
+[tool.poetry.group.test]
+optional = true
+
+[tool.poetry.group.test.dependencies]
+pytest = "^8.3.2"
+faker = "^28.4.1"
+pytest-randomly = "^3.15.0"
+pytest-asyncio = "^0.24.0"
+
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = ">=2.6"
+ruff = "^0.6.4"
+black = "^24.8.0"
+
+
+[tool.ruff]
+fix = true
+line-length = 88
+src = ["src"]
+target-version = "py38"
+
+[tool.ruff.lint]
+ignore = ["UP007"]
+extend-select = [
+    "B",   # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "ERA", # flake8-eradicate/eradicate
+    "I",   # isort
+    "N",   # pep8-naming
+    "PIE", # flake8-pie
+    "PGH", # pygrep
+    "RUF", # ruff checks
+    "SIM", # flake8-simplify
+    "T20", # flake8-print
+    "TCH", # flake8-type-checking
+    "TID", # flake8-tidy-imports
+    "UP",  # pyupgrade
+]
+
+extend-safe-fixes = [
+    "TCH", # move import from and to TYPE_CHECKING blocks
+]
+unfixable = [
+    "ERA", # do not autoremove commented out code
+]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
+
+[tool.ruff.lint.isort]
+force-single-line = true
+lines-between-types = 1
+lines-after-imports = 2
+known-first-party = ["poetry_plugin_bundle"]
+required-imports = ["from __future__ import annotations"]
+
+[tool.ruff.lint.pyupgrade]
+keep-runtime-typing = false
+
+[tool.pytest.ini_options]
+pythonpath = "src"
+testpaths = [
+    "tests"
+]
+
+[build-system]
+requires = ["poetry-core>=1.8.3"]
+build-backend = "poetry.core.masonry.api"
